@@ -1,0 +1,92 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Section */
+header {
+    /*border-bottom: 1px solid #ccc;*/
+    padding: 40px 0;
+}
+
+/* Flex container for header content */
+.header-content {
+    margin-left: 60px;
+    margin-right: 60px;
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space between h1 and nav */
+    align-items: center; /* Align h1 and nav vertically in the center */
+    padding: 0 20px; /* Optional horizontal padding */
+}
+
+.header-content h1 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.header-content h1 a {
+    font-size: 24px;
+    font-weight: normal;
+    text-decoration: none;
+    font-weight: bold;
+    color: #777;
+    
+}
+
+.header-content nav {
+    display: flex; /* Align links horizontally */
+    gap: 20px; /* Add space between links */
+}
+
+.header-content nav a {
+    color: #777;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.header-content nav a:hover {
+    color: #333;
+}
+
+/* Main Section */
+main {
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer Section */
+footer {
+    display: flex; /* Flexbox for centering text */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 10px;
+    /*border-top: 1px solid #ccc;*/
+    font-size: 14px;
+}

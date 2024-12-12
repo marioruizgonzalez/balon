@@ -1,0 +1,149 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Section */
+header {
+    /*border-bottom: 1px solid #ccc;*/
+    padding: 40px 0;
+}
+
+/* Flex container for header content */
+.header-content {
+    margin-left: 60px;
+    margin-right: 60px;
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space between h1 and nav */
+    align-items: center; /* Align h1 and nav vertically in the center */
+    padding: 0 20px; /* Optional horizontal padding */
+}
+
+.header-content h1 {
+    font-size: 24px;
+    font-weight: normal;
+    
+}
+
+.header-content h1 a {
+    font-size: 24px;
+    font-weight: normal;
+    text-decoration: none;
+    font-weight: bold;
+    color: #777;
+    
+}
+
+.header-content nav {
+    display: flex; /* Align links horizontally */
+    gap: 20px; /* Add space between links */
+}
+
+.header-content nav a {
+    color: #777;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.header-content nav a:hover {
+    color: #333;
+}
+
+/* Main Section */
+main {
+    display: flex;
+    flex: 1; /* Occupy remaining vertical space */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    padding: 40px 20px;
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    max-width: 1000px;
+    width: 100%;
+    gap: 40px;
+}
+
+.profile-image {
+    flex: 1; /* Equal space with profile text */
+    max-width: 50%; /* Limit width to 50% */
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.profile-text {
+    flex: 1; /* Equal space with profile image */
+}
+
+.profile-text h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.pronunciation {
+    font-size: 14px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.profile-text p {
+    margin-bottom: 20px;
+}
+
+.profile-text ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.profile-text li {
+    margin-bottom: 10px;
+}
+
+/* Footer Section */
+footer {
+    display: flex; /* Flexbox for centering text */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 10px;
+    /*border-top: 1px solid #ccc;*/
+    font-size: 14px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column; /* Stack h1 and nav */
+        align-items: center; /* Center content */
+        text-align: center; /* Center text */
+    }
+
+    nav {
+        margin-top: 10px; /* Add spacing between h1 and nav */
+    }
+
+    .profile {
+        flex-direction: column; /* Stack image and text */
+    }
+
+    .profile-image,
+    .profile-text {
+        max-width: 100%; /* Full width for small screens */
+    }
+}
