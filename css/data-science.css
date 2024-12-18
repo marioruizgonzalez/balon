@@ -96,3 +96,50 @@ footer {
     /*border-top: 1px solid #ccc;*/
     font-size: 14px;
 }
+
+.ancla{
+    color: #777;
+    text-decoration: none;
+    font-weight: bold;
+    font-weight: normal;
+    padding-left: 40px;
+}
+
+
+.ancla:hover {
+    color: #333;
+}
+
+.submenu{
+
+    color: #777;
+    text-decoration: none;
+    font-weight: bold;
+    font-weight: normal;
+    padding-left: 40px;
+    
+    display:inline-flex;        /* Enables Flexbox for the inner container */
+    justify-content: center; /* Centers content horizontally */
+    padding: 10px;
+
+}
+
+.tab-container {
+    display: flex;         /* Enables Flexbox for the inner container */
+    justify-content: center; /* Centers content horizontally */
+    padding: 10px;
+    background: #f4f4f4;   /* Just for better visibility */
+}
+.tab {
+    margin: 0 10px;        /* Spacing between tabs */
+    padding: 10px 20px;    /* Padding around tab text */
+    border-radius: 5px;    /* Rounded corners */
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: bold;
+    font-weight: normal;
+}
+
+.tab:hover {
+    color: #535353;
+}
