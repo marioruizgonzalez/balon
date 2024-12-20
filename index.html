@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume — Hannah Gaudet</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Data Science Projects</title>
+    <link rel="stylesheet" href="css/estadistica.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .bar { fill: steelblue; }
+        .line { fill: none; stroke: steelblue; stroke-width: 2; }
+    </style>
 </head>
 <body>
     <header>
@@ -17,25 +22,337 @@
         </div>
     </header>
 
-    <main>
-        <section class="profile">
-            <img src="images/mruiz.png" alt="Mario Ruiz" class="profile-image">
-            <div class="profile-text">
-                <h2>Hi, I'm Mario Ruiz</h2>
-                <p class="pronunciation">PRONOUNCED ‘GO-DAY’</p>
-                <p>I’m an MIT graduate working to improve the sports world through analytics, software development, and outreach efforts. My interests include:</p>
-                <ul>
-                    <li>Education</li>
-                    <li>Sports analytics</li>
-                    <li>Front-end development</li>
-                    <li>D&I work</li>
-                </ul>
+    <main>  <h2 id="section1">Data Science Projects</h2>
+           
+        <div class="tab-container">
+            <a class="tab" href="#opcion1">Opción 1</a>
+            <a class="tab" href="#opcion2">Opción 2</a>
+            <a class="tab" href="#opcion2">Opción 3</a>
+        </div>
+
+        <section>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit.</p>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Project 1: Sales Analysis</h3>
+                    <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
+                    <h2>Bar Chart Example</h2>
+                    <div id="barChart"></div>
+                    <script>
+                        // Sample data for the bar chart
+                        const data = [{label: "A", value: 30}, {label: "B", value: 80}, {label: "C", value: 45}, {label: "D", value: 60}];
+
+                        const width = 300;
+                        const height = 200;
+                        const margin = {top: 20, right: 30, bottom: 40, left: 30};
+
+                        const x = d3.scaleBand()
+                            .domain(data.map(d => d.label))
+                            .range([margin.left, width - margin.right])
+                            .padding(0.1);
+
+                        const y = d3.scaleLinear()
+                            .domain([0, d3.max(data, d => d.value)])
+                            .range([height - margin.bottom, margin.top]);
+
+                        const svg = d3.select("#barChart")
+                            .append("svg")
+                            .attr("width", width)
+                            .attr("height", height);
+
+                        svg.append("g")
+                            .attr("fill", "steelblue")
+                        .selectAll("rect")
+                        .data(data)
+                        .join("rect")
+                            .attr("x", d => x(d.label))
+                            .attr("y", d => y(d.value))
+                            .attr("height", d => y(0) - y(d.value))
+                            .attr("width", x.bandwidth());
+
+                        svg.append("g")
+                            .attr("transform", `translate(0,${height - margin.bottom})`)
+                            .call(d3.axisBottom(x));
+
+                        svg.append("g")
+                            .attr("transform", `translate(${margin.left},0)`)
+                            .call(d3.axisLeft(y));
+
+                    </script>
+                </div>
+                <div class="project-card">
+                    <h3>Project 2: Customer Segmentation</h3>
+                    <p>Clustering customers using K-means for targeted marketing strategies.</p>
+                    <h2>Line Graph Example</h2>
+                    <div id="lineGraph"></div>
+                    <script>
+                        // Sample data for the line graph
+                        const lineData = [{x: 0, y: 20}, {x: 1, y: 50}, {x: 2, y: 30}, {x: 3, y: 70}, {x: 4, y: 60}];
+
+                        const xScale = d3.scaleLinear()
+                            .domain(d3.extent(lineData, d => d.x))
+                            .range([margin.left, width - margin.right]);
+
+                        const yScale = d3.scaleLinear()
+                            .domain([0, d3.max(lineData, d => d.y)])
+                            .range([height - margin.bottom, margin.top]);
+
+                        const line = d3.line()
+                            .x(d => xScale(d.x))
+                            .y(d => yScale(d.y));
+
+                        const svgLine = d3.select("#lineGraph")
+                            .append("svg")
+                            .attr("width", width)
+                            .attr("height", height);
+
+                        svgLine.append("path")
+                            .datum(lineData)
+                            .attr("fill", "none")
+                            .attr("stroke", "steelblue")
+                            .attr("stroke-width", 2)
+                            .attr("d", line);
+
+                        svgLine.append("g")
+                            .attr("transform", `translate(0,${height - margin.bottom})`)
+                            .call(d3.axisBottom(xScale));
+
+                        svgLine.append("g")
+                            .attr("transform", `translate(${margin.left},0)`)
+                            .call(d3.axisLeft(yScale));
+
+                    </script>
+                </div>
             </div>
+            <a class="ancla" href="#section1">Regresar al menú</a>
         </section>
+
+
+
+        <section id="opcion1">
+            <h2>Data Science Projects</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit.</p>
+          
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>Project 1: Sales Analysis</h3>
+                        <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
+                        <h2>Bar Chart Example</h2>
+                        <div id="pieChart"></div>
+                        <script>
+                            const pieData = [{label: "Product A", value: 20}, {label: "Product B", value: 30}, {label: "Product C", value: 50}];
+                            const radius = Math.min(width, height) / 2;
+                            const pie = d3.pie().value(d => d.value);
+                            const arc = d3.arc().innerRadius(0).outerRadius(radius);
+                    
+                            const svgPie = d3.select("#pieChart")
+                                .append("svg")
+                                .attr("width", width)
+                                .attr("height", height)
+                                .append("g")
+                                .attr("transform", `translate(${width / 2}, ${height / 2})`);
+                    
+                            svgPie.selectAll("path")
+                                .data(pie(pieData))
+                                .join("path")
+                                .attr("fill", (d, i) => d3.schemeCategory10[i])
+                                .attr("d", arc);
+                    
+                            svgPie.selectAll("text")
+                                .data(pie(pieData))
+                                .join("text")
+                                .attr("transform", d => `translate(${arc.centroid(d)})`)
+                                .attr("text-anchor", "middle")
+                                .text(d => d.data.label);
+    
+                        </script>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project 2: Customer Segmentation</h3>
+                        <p>Clustering customers using K-means for targeted marketing strategies.</p>
+                        <h2>Line Graph Example</h2>
+                        <div id="areaGraph"></div>
+                        <script>
+                            const areaData = [{x: 0, y: 20}, {x: 1, y: 40}, {x: 2, y: 25}, {x: 3, y: 60}, {x: 4, y: 40}];
+
+        const xAreaScale = d3.scaleLinear()
+            .domain(d3.extent(areaData, d => d.x))
+            .range([margin.left, width - margin.right]);
+
+        const yAreaScale = d3.scaleLinear()
+            .domain([0, d3.max(areaData, d => d.y)])
+            .range([height - margin.bottom, margin.top]);
+
+        const area = d3.area()
+            .x(d => xAreaScale(d.x))
+            .y0(height - margin.bottom)
+            .y1(d => yAreaScale(d.y));
+
+        const svgArea = d3.select("#areaGraph")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        svgArea.append("path")
+            .datum(areaData)
+            .attr("fill", "lightblue")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 1.5)
+            .attr("d", area);
+
+        svgArea.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(xAreaScale));
+
+        svgArea.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(yAreaScale));
+    
+                        </script>
+                    </div>
+                </div>   
+                <a class="ancla" href="#section1">Regresar al menú</a>
+        </section>
+
+
+
+
+        <section id="opcion2">
+            <h2>Data Science Projects</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
+                fermentum. Nulla facilisi. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. 
+                Morbi accumsan ipsum velit.</p>
+          
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>Project 1: Sales Analysis</h3>
+                        <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
+                        <h2>Bar Chart Example</h2>
+                        <div id="scatterPlot"></div>
+                        <script>
+                            const scatterData = [
+            {x: 10, y: 80, z: 120}, {x: 20, y: 90, z: 60}, {x: 30, y: 50, z: 200}, 
+            {x: 40, y: 60, z: 80}, {x: 50, y: 30, z: 100}
+        ];
+
+        const xScatter = d3.scaleLinear()
+            .domain([0, d3.max(scatterData, d => d.x)])
+            .range([margin.left, width - margin.right]);
+
+        const yScatter = d3.scaleLinear()
+            .domain([0, d3.max(scatterData, d => d.y)])
+            .range([height - margin.bottom, margin.top]);
+
+        const svgScatter = d3.select("#scatterPlot")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        svgScatter.selectAll("circle")
+            .data(scatterData)
+            .join("circle")
+            .attr("cx", d => xScatter(d.x))
+            .attr("cy", d => yScatter(d.y))
+            .attr("r", 5)
+            .attr("fill", "tomato");
+
+        svgScatter.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(xScatter));
+
+        svgScatter.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(yScatter));
+    
+                        </script>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project 2: Customer Segmentation</h3>
+                        <p>Clustering customers using K-means for targeted marketing strategies.</p>
+                        <h2>Line Graph Example</h2>
+                        <div id="stackedBarChart"></div>
+                        <script>
+                            const stackedData = [
+            {region: "North", productA: 120, productB: 100, productC: 140},
+            {region: "South", productA: 150, productB: 130, productC: 120},
+            {region: "East", productA: 160, productB: 160, productC: 100},
+            {region: "West", productA: 140, productB: 170, productC: 150}
+        ];
+
+        const keys = ["productA", "productB", "productC"];
+
+        const xStacked = d3.scaleBand()
+            .domain(stackedData.map(d => d.region))
+            .rangeRound([margin.left, width - margin.right])
+            .paddingInner(0.1);
+
+        const yStacked = d3.scaleLinear()
+            .domain([0, d3.max(stackedData, d => d.productA + d.productB + d.productC)])
+            .rangeRound([height - margin.bottom, margin.top]);
+
+        const color = d3.scaleOrdinal()
+            .domain(keys)
+            .range(['#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
+
+        const svgStacked = d3.select("#stackedBarChart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const layer = svgStacked.selectAll(".layer")
+            .data(d3.stack().keys(keys)(stackedData))
+            .join("g")
+            .attr("class", "layer")
+            .style("fill", d => color(d.key));
+
+        layer.selectAll("rect")
+            .data(d => d)
+            .join("rect")
+            .attr("x", d => xStacked(d.data.region))
+            .attr("y", d => yStacked(d[1]))
+            .attr("height", d => yStacked(d[0]) - yStacked(d[1]))
+            .attr("width", xStacked.bandwidth());
+
+        svgStacked.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(xStacked));
+
+        svgStacked.append("g")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(yStacked));
+    
+                        </script>
+                    </div>
+                </div>  
+                <a class="ancla" href="#section1">Regresar al menú</a> 
+        </section>
+       
     </main>
 
     <footer>
-        <p>&copy; 2024 Balon</p>
+        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a> </p>
     </footer>
 </body>
 </html>

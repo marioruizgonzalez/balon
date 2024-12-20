@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Learning Projects</title>
-    <link rel="stylesheet" href="css/machine-learning.css">
+    <link rel="stylesheet" href="css/sheplays.css">
+    <script src="js/sheplays.js"></script>
 </head>
 <body>
     <header>
         <div class="header-content">
             <h1><a href="index.html">Balon</a></h1>
             <nav>
-                <a href="estadistica-femenil.html">Estadistica Femenil</a>
+                <a href="index.html">Estadistica Femenil</a>
                 <a href="sheplays-analytics.html">Sheplays Analytics</a>
             </nav>
         </div>
@@ -33,12 +34,42 @@
             <div class="project-grid">
                 <div class="project-card custom-size-vid">
                     <h3>Choose a video</h3>
-                    <p>video 1</p>
+                    
+                        <h4>Video 1</h4>
+                        <h4>Video 2</h4>
+                        <h4>Video 3</h4>
+                    
                 </div>
                 <div class="project-card custom-size-model">
                     <h3>Project 2: Sentiment Analysis</h3>
-                    <p>Analyzing customer reviews with NLP techniques to gauge sentiment.</p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-button" onclick="toggleAccordion(event)">
+                                Option 1: Basic Analysis
+                            </button>
+                            <div class="accordion-content">
+                                <p>Basic sentiment analysis using predefined lexicons.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button" onclick="toggleAccordion(event)">
+                                Option 2: Machine Learning
+                            </button>
+                            <div class="accordion-content">
+                                <p>Using machine learning models to predict customer sentiments.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-button" onclick="toggleAccordion(event)">
+                                Option 3: Deep Learning
+                            </button>
+                            <div class="accordion-content">
+                                <p>Advanced analysis with deep neural networks for more accurate insights.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
                 <div class="project-card custom-size-player">
                     <h1>HTML5 Video Player</h1>
                     <video width="640" height="360" controls>
@@ -54,7 +85,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Mario Ruiz</p>
+        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a> </p>
     </footer>
 </body>
 </html>

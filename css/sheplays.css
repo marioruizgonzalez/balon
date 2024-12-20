@@ -73,6 +73,7 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
     color: aliceblue;
+    font-size: 22px;
 }
 
 p {
@@ -118,3 +119,31 @@ p {
 .project-card:hover {
     transform: scale(1.05);
 }
+
+.accordion-button {
+    background-color: #00c13d;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background-color: rgb(31, 67, 43);
+    border: 1px solid rgb(0, 0, 0);
+    padding: 0 18px;
+}
+
+.accordion-content.expanded {
+    max-height: 500px; /* Ajusta este valor según el contenido máximo esperado */
+    padding: 18px; /* Reestablecer el padding cuando esté expandido */
+}
+
