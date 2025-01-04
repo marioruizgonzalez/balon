@@ -4,23 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Science Projects</title>
-    <link rel="stylesheet" href="css/estadistica.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadistica.css') }}">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .bar { fill: steelblue; }
-        .line { fill: none; stroke: steelblue; stroke-width: 2; }
+        .axis-label { font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1><a href="index.html">Balon</a></h1>
+            <h1><a href="{{ url_for('index') }}">Balon</a></h1>
             <nav>
-                <a href="estadistica-femenil.html">Estadistica Femenil</a>
-                <a href="sheplays-analytics.html">Sheplays Analytics</a>
+                <a href="{{ url_for('index') }}">Estadistica Femenil</a>
+                <a href="{{ url_for('sheplays_analytics') }}">Sheplays Analytics</a>
             </nav>
         </div>
     </header>
+
+    <main>
+        <h2>Top 10 Scorers in History</h2>
+        <div id="topScorersChart"></div>
+        <script>
+            // Fetch data from Flask API
+            fetch('/top-scorers')
+                .then(response => response.json())
+                .then(data => {
+                    // Set dimensions
+                    const width = 800, height = 400;
+                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+
+                    // Create scales
+                    const xScale = d3.scaleBand()
+                        .domain(data.map(d => d.player_name))
+                        .range([margin.left, width - margin.right])
+                        .padding(0.1);
+
+                    const yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.total_goals)])
+                        .nice()
+                        .range([height - margin.bottom, margin.top]);
+
+                    // Create SVG container
+                    const svg = d3.select("#topScorersChart")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
+
+                    // Add X-axis
+                    svg.append("g")
+                        .attr("transform", `translate(0,${height - margin.bottom})`)
+                        .call(d3.axisBottom(xScale))
+                        .selectAll("text")
+                        .attr("transform", "rotate(-45)")
+                        .style("text-anchor", "end");
+
+                    svg.append("text")
+                        .attr("x", width / 2)
+                        .attr("y", height - margin.bottom + 40)
+                        .attr("text-anchor", "middle")
+                        .attr("class", "axis-label")
+                        .text("Player Name");
+
+                    // Add Y-axis
+                    svg.append("g")
+                        .attr("transform", `translate(${margin.left},0)`)
+                        .call(d3.axisLeft(yScale));
+
+                    svg.append("text")
+                        .attr("x", -(height / 2))
+                        .attr("y", margin.left - 50)
+                        .attr("text-anchor", "middle")
+                        .attr("transform", "rotate(-90)")
+                        .attr("class", "axis-label")
+                        .text("Total Goals");
+
+                    // Add bars
+                    svg.selectAll(".bar")
+                        .data(data)
+                        .enter()
+                        .append("rect")
+                        .attr("class", "bar")
+                        .attr("x", d => xScale(d.player_name))
+                        .attr("y", d => yScale(d.total_goals))
+                        .attr("height", d => height - margin.bottom - yScale(d.total_goals))
+                        .attr("width", xScale.bandwidth());
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        </script>
+    </main>
+
+    <footer>
+        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a></p>
+    </footer>
+</body>
+</html>
+<!--<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Science Projects</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estadistica.css') }}">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <style>
+            .bar { fill: steelblue; }
+            .axis-label { font-size: 12px; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-content">
+                <h1><a href="{{ url_for('index') }}">Balon</a></h1>
+                <nav>
+                    <a href="{{ url_for('index') }}">Estadistica Femenil</a>
+                    <a href="{{ url_for('sheplays_analytics') }}">Sheplays Analytics</a>
+                </nav>
+            </div>
+        </header>
 
     <main>  <h2 id="section1">Data Science Projects</h2>
            
@@ -356,3 +457,4 @@
     </footer>
 </body>
 </html>
+-->

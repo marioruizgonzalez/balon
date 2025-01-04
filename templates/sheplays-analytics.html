@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Learning Projects</title>
-    <link rel="stylesheet" href="css/sheplays.css">
-    <script src="js/sheplays.js"></script>
+    <link rel="stylesheet" href="static/css/sheplays.css">
+    <script src="static/js/sheplays.js"></script>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1><a href="index.html">Balon</a></h1>
+            <h1><a href="{{ url_for('index') }}">Balon</a></h1>
             <nav>
-                <a href="index.html">Estadistica Femenil</a>
-                <a href="sheplays-analytics.html">Sheplays Analytics</a>
+                <a href="{{ url_for('index') }}">Estadistica Femenil</a>
+                <a href="{{ url_for('sheplays_analytics') }}">Sheplays Analytics</a>
             </nav>
         </div>
     </header>
@@ -73,7 +73,7 @@
                 <div class="project-card custom-size-player">
                     <h1>HTML5 Video Player</h1>
                     <video width="640" height="360" controls>
-                        <source src="resources/nido2.mp4" type="video/mp4">
+                        <source src="static/resources/nido2.mp4" type="video/mp4">
                         <source src="movie.ogg" type="video/ogg">
                         Your browser does not support the video tag.
                     </video>
