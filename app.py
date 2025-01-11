@@ -3,6 +3,37 @@ import psycopg2
 
 app = Flask(__name__)
 
+@app.route('/scatter-data')
+def scatter_data():
+    conn = psycopg2.connect(
+        host="localhost",
+        database="labasefemenil",
+        user="marioruiz",
+        password="welcome1"
+    )
+    cursor = conn.cursor()
+
+    query = """
+    SELECT 
+        jugador AS player_name, 
+        SUM(goles) AS goals, 
+        SUM(mj) AS matches_played
+    FROM 
+        public.lbf_goleo_hist
+    GROUP BY 
+        jugador
+    ORDER BY 
+        goals DESC
+    LIMIT 10;
+    """
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    conn.close()
+
+    data = [{"player_name": row[0], "goals": row[1], "matches_played": row[2]} for row in rows]
+    return jsonify(data)
+
+
 # Database Connection: Fetch top 10 scorers
 def get_top_scorers():
     # Connect to PostgreSQL
@@ -34,6 +65,8 @@ def get_top_scorers():
     data = [{"player_name": row[0], "total_goals": row[1]} for row in rows]
     conn.close()
     return data
+
+    
 
 @app.route('/')
 def index():

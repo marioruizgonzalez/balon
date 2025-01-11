@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .bar { fill: steelblue; }
+        .scatter-circle { fill: orange; stroke: steelblue; stroke-width: 1.5; }
         .axis-label { font-size: 12px; font-weight: bold; }
     </style>
 </head>
@@ -26,15 +27,13 @@
         <h2>Top 10 Scorers in History</h2>
         <div id="topScorersChart"></div>
         <script>
-            // Fetch data from Flask API
+            // Fetch data for the bar chart
             fetch('/top-scorers')
                 .then(response => response.json())
                 .then(data => {
-                    // Set dimensions
                     const width = 800, height = 400;
                     const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-                    // Create scales
                     const xScale = d3.scaleBand()
                         .domain(data.map(d => d.player_name))
                         .range([margin.left, width - margin.right])
@@ -45,13 +44,11 @@
                         .nice()
                         .range([height - margin.bottom, margin.top]);
 
-                    // Create SVG container
                     const svg = d3.select("#topScorersChart")
                         .append("svg")
                         .attr("width", width)
                         .attr("height", height);
 
-                    // Add X-axis
                     svg.append("g")
                         .attr("transform", `translate(0,${height - margin.bottom})`)
                         .call(d3.axisBottom(xScale))
@@ -59,27 +56,10 @@
                         .attr("transform", "rotate(-45)")
                         .style("text-anchor", "end");
 
-                    svg.append("text")
-                        .attr("x", width / 2)
-                        .attr("y", height - margin.bottom + 40)
-                        .attr("text-anchor", "middle")
-                        .attr("class", "axis-label")
-                        .text("Player Name");
-
-                    // Add Y-axis
                     svg.append("g")
                         .attr("transform", `translate(${margin.left},0)`)
                         .call(d3.axisLeft(yScale));
 
-                    svg.append("text")
-                        .attr("x", -(height / 2))
-                        .attr("y", margin.left - 50)
-                        .attr("text-anchor", "middle")
-                        .attr("transform", "rotate(-90)")
-                        .attr("class", "axis-label")
-                        .text("Total Goals");
-
-                    // Add bars
                     svg.selectAll(".bar")
                         .data(data)
                         .enter()
@@ -89,8 +69,61 @@
                         .attr("y", d => yScale(d.total_goals))
                         .attr("height", d => height - margin.bottom - yScale(d.total_goals))
                         .attr("width", xScale.bandwidth());
+                });
+        </script>
+
+        <h2>Goals vs Matches Played (Scatter Plot)</h2>
+        <div id="scatterPlotChart"></div>
+        <script>
+            // Fetch data for the scatter plot
+            fetch('/scatter-data') // Replace with the corresponding Flask route
+                .then(response => response.json())
+                .then(data => {
+                    const width = 800, height = 400;
+                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+
+                    const xScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.matches_played)])
+                        .range([margin.left, width - margin.right]);
+
+                    const yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.goals)])
+                        .range([height - margin.bottom, margin.top]);
+
+                    const svg = d3.select("#scatterPlotChart")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
+
+                    svg.append("g")
+                        .attr("transform", `translate(0,${height - margin.bottom})`)
+                        .call(d3.axisBottom(xScale))
+                        .append("text")
+                        .attr("x", width / 2)
+                        .attr("y", 40)
+                        .attr("class", "axis-label")
+                        .text("Matches Played");
+
+                    svg.append("g")
+                        .attr("transform", `translate(${margin.left},0)`)
+                        .call(d3.axisLeft(yScale))
+                        .append("text")
+                        .attr("x", -(height / 2))
+                        .attr("y", -40)
+                        .attr("transform", "rotate(-90)")
+                        .attr("class", "axis-label")
+                        .text("Goals");
+
+                    svg.selectAll(".scatter-circle")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("class", "scatter-circle")
+                        .attr("cx", d => xScale(d.matches_played))
+                        .attr("cy", d => yScale(d.goals))
+                        .attr("r", 5);
                 })
-                .catch(error => console.error("Error fetching data:", error));
+                .catch(error => console.error("Error fetching scatter plot data:", error));
         </script>
     </main>
 
@@ -99,7 +132,8 @@
     </footer>
 </body>
 </html>
-<!--<!DOCTYPE html>
+-->
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -109,6 +143,7 @@
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <style>
             .bar { fill: steelblue; }
+            .scatter-circle { fill: orange; stroke: steelblue; stroke-width: 1.5; }
             .axis-label { font-size: 12px; font-weight: bold; }
         </style>
     </head>
@@ -145,99 +180,123 @@
                 <div class="project-card">
                     <h3>Project 1: Sales Analysis</h3>
                     <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
-                    <h2>Bar Chart Example</h2>
-                    <div id="barChart"></div>
-                    <script>
-                        // Sample data for the bar chart
-                        const data = [{label: "A", value: 30}, {label: "B", value: 80}, {label: "C", value: 45}, {label: "D", value: 60}];
+                    <h2>Top 10 Scorers in History</h2>
+        <div id="topScorersChart"></div>
+        <script>
+            // Fetch data for the bar chart
+            fetch('/top-scorers')
+                .then(response => response.json())
+                .then(data => {
+                    const width = 800, height = 400;
+                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-                        const width = 300;
-                        const height = 200;
-                        const margin = {top: 20, right: 30, bottom: 40, left: 30};
+                    const xScale = d3.scaleBand()
+                        .domain(data.map(d => d.player_name))
+                        .range([margin.left, width - margin.right])
+                        .padding(0.1);
 
-                        const x = d3.scaleBand()
-                            .domain(data.map(d => d.label))
-                            .range([margin.left, width - margin.right])
-                            .padding(0.1);
+                    const yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.total_goals)])
+                        .nice()
+                        .range([height - margin.bottom, margin.top]);
 
-                        const y = d3.scaleLinear()
-                            .domain([0, d3.max(data, d => d.value)])
-                            .range([height - margin.bottom, margin.top]);
+                    const svg = d3.select("#topScorersChart")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
 
-                        const svg = d3.select("#barChart")
-                            .append("svg")
-                            .attr("width", width)
-                            .attr("height", height);
+                    svg.append("g")
+                        .attr("transform", `translate(0,${height - margin.bottom})`)
+                        .call(d3.axisBottom(xScale))
+                        .selectAll("text")
+                        .attr("transform", "rotate(-45)")
+                        .style("text-anchor", "end");
 
-                        svg.append("g")
-                            .attr("fill", "steelblue")
-                        .selectAll("rect")
+                    svg.append("g")
+                        .attr("transform", `translate(${margin.left},0)`)
+                        .call(d3.axisLeft(yScale));
+
+                    svg.selectAll(".bar")
                         .data(data)
-                        .join("rect")
-                            .attr("x", d => x(d.label))
-                            .attr("y", d => y(d.value))
-                            .attr("height", d => y(0) - y(d.value))
-                            .attr("width", x.bandwidth());
-
-                        svg.append("g")
-                            .attr("transform", `translate(0,${height - margin.bottom})`)
-                            .call(d3.axisBottom(x));
-
-                        svg.append("g")
-                            .attr("transform", `translate(${margin.left},0)`)
-                            .call(d3.axisLeft(y));
-
-                    </script>
+                        .enter()
+                        .append("rect")
+                        .attr("class", "bar")
+                        .attr("x", d => xScale(d.player_name))
+                        .attr("y", d => yScale(d.total_goals))
+                        .attr("height", d => height - margin.bottom - yScale(d.total_goals))
+                        .attr("width", xScale.bandwidth());
+                });
+        </script>
                 </div>
                 <div class="project-card">
                     <h3>Project 2: Customer Segmentation</h3>
                     <p>Clustering customers using K-means for targeted marketing strategies.</p>
-                    <h2>Line Graph Example</h2>
-                    <div id="lineGraph"></div>
-                    <script>
-                        // Sample data for the line graph
-                        const lineData = [{x: 0, y: 20}, {x: 1, y: 50}, {x: 2, y: 30}, {x: 3, y: 70}, {x: 4, y: 60}];
+                    <h2>Goals vs Matches Played (Scatter Plot)</h2>
+        <div id="scatterPlotChart"></div>
+        <script>
+            // Fetch data for the scatter plot
+            fetch('/scatter-data') // Replace with the corresponding Flask route
+                .then(response => response.json())
+                .then(data => {
+                    const width = 800, height = 400;
+                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-                        const xScale = d3.scaleLinear()
-                            .domain(d3.extent(lineData, d => d.x))
-                            .range([margin.left, width - margin.right]);
+                    const xScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.matches_played)])
+                        .range([margin.left, width - margin.right]);
 
-                        const yScale = d3.scaleLinear()
-                            .domain([0, d3.max(lineData, d => d.y)])
-                            .range([height - margin.bottom, margin.top]);
+                    const yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, d => d.goals)])
+                        .range([height - margin.bottom, margin.top]);
 
-                        const line = d3.line()
-                            .x(d => xScale(d.x))
-                            .y(d => yScale(d.y));
+                    const svg = d3.select("#scatterPlotChart")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
 
-                        const svgLine = d3.select("#lineGraph")
-                            .append("svg")
-                            .attr("width", width)
-                            .attr("height", height);
+                    svg.append("g")
+                        .attr("transform", `translate(0,${height - margin.bottom})`)
+                        .call(d3.axisBottom(xScale))
+                        .append("text")
+                        .attr("x", width / 2)
+                        .attr("y", 40)
+                        .attr("class", "axis-label")
+                        .text("Matches Played");
 
-                        svgLine.append("path")
-                            .datum(lineData)
-                            .attr("fill", "none")
-                            .attr("stroke", "steelblue")
-                            .attr("stroke-width", 2)
-                            .attr("d", line);
+                    svg.append("g")
+                        .attr("transform", `translate(${margin.left},0)`)
+                        .call(d3.axisLeft(yScale))
+                        .append("text")
+                        .attr("x", -(height / 2))
+                        .attr("y", -40)
+                        .attr("transform", "rotate(-90)")
+                        .attr("class", "axis-label")
+                        .text("Goals");
 
-                        svgLine.append("g")
-                            .attr("transform", `translate(0,${height - margin.bottom})`)
-                            .call(d3.axisBottom(xScale));
-
-                        svgLine.append("g")
-                            .attr("transform", `translate(${margin.left},0)`)
-                            .call(d3.axisLeft(yScale));
-
-                    </script>
+                    svg.selectAll(".scatter-circle")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("class", "scatter-circle")
+                        .attr("cx", d => xScale(d.matches_played))
+                        .attr("cy", d => yScale(d.goals))
+                        .attr("r", 5);
+                })
+                .catch(error => console.error("Error fetching scatter plot data:", error));
+        </script>
                 </div>
             </div>
             <a class="ancla" href="#section1">Regresar al menú</a>
         </section>
 
+</main>
 
-
+    <footer>
+        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a> </p>
+    </footer>
+</body>
+</html>
+<!--
         <section id="opcion1">
             <h2>Data Science Projects</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
