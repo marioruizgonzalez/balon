@@ -1,138 +1,3 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Science Projects</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadistica.css') }}">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        .bar { fill: steelblue; }
-        .scatter-circle { fill: orange; stroke: steelblue; stroke-width: 1.5; }
-        .axis-label { font-size: 12px; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <h1><a href="{{ url_for('index') }}">Balon</a></h1>
-            <nav>
-                <a href="{{ url_for('index') }}">Estadistica Femenil</a>
-                <a href="{{ url_for('sheplays_analytics') }}">Sheplays Analytics</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <h2>Top 10 Scorers in History</h2>
-        <div id="topScorersChart"></div>
-        <script>
-            // Fetch data for the bar chart
-            fetch('/top-scorers')
-                .then(response => response.json())
-                .then(data => {
-                    const width = 800, height = 400;
-                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-
-                    const xScale = d3.scaleBand()
-                        .domain(data.map(d => d.player_name))
-                        .range([margin.left, width - margin.right])
-                        .padding(0.1);
-
-                    const yScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.total_goals)])
-                        .nice()
-                        .range([height - margin.bottom, margin.top]);
-
-                    const svg = d3.select("#topScorersChart")
-                        .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
-
-                    svg.append("g")
-                        .attr("transform", `translate(0,${height - margin.bottom})`)
-                        .call(d3.axisBottom(xScale))
-                        .selectAll("text")
-                        .attr("transform", "rotate(-45)")
-                        .style("text-anchor", "end");
-
-                    svg.append("g")
-                        .attr("transform", `translate(${margin.left},0)`)
-                        .call(d3.axisLeft(yScale));
-
-                    svg.selectAll(".bar")
-                        .data(data)
-                        .enter()
-                        .append("rect")
-                        .attr("class", "bar")
-                        .attr("x", d => xScale(d.player_name))
-                        .attr("y", d => yScale(d.total_goals))
-                        .attr("height", d => height - margin.bottom - yScale(d.total_goals))
-                        .attr("width", xScale.bandwidth());
-                });
-        </script>
-
-        <h2>Goals vs Matches Played (Scatter Plot)</h2>
-        <div id="scatterPlotChart"></div>
-        <script>
-            // Fetch data for the scatter plot
-            fetch('/scatter-data') // Replace with the corresponding Flask route
-                .then(response => response.json())
-                .then(data => {
-                    const width = 800, height = 400;
-                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-
-                    const xScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.matches_played)])
-                        .range([margin.left, width - margin.right]);
-
-                    const yScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.goals)])
-                        .range([height - margin.bottom, margin.top]);
-
-                    const svg = d3.select("#scatterPlotChart")
-                        .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
-
-                    svg.append("g")
-                        .attr("transform", `translate(0,${height - margin.bottom})`)
-                        .call(d3.axisBottom(xScale))
-                        .append("text")
-                        .attr("x", width / 2)
-                        .attr("y", 40)
-                        .attr("class", "axis-label")
-                        .text("Matches Played");
-
-                    svg.append("g")
-                        .attr("transform", `translate(${margin.left},0)`)
-                        .call(d3.axisLeft(yScale))
-                        .append("text")
-                        .attr("x", -(height / 2))
-                        .attr("y", -40)
-                        .attr("transform", "rotate(-90)")
-                        .attr("class", "axis-label")
-                        .text("Goals");
-
-                    svg.selectAll(".scatter-circle")
-                        .data(data)
-                        .enter()
-                        .append("circle")
-                        .attr("class", "scatter-circle")
-                        .attr("cx", d => xScale(d.matches_played))
-                        .attr("cy", d => yScale(d.goals))
-                        .attr("r", 5);
-                })
-                .catch(error => console.error("Error fetching scatter plot data:", error));
-        </script>
-    </main>
-
-    <footer>
-        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a></p>
-    </footer>
-</body>
-</html>
--->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -150,7 +15,7 @@
     <body>
         <header>
             <div class="header-content">
-                <h1><a href="{{ url_for('index') }}">Balon</a></h1>
+                <h1><a href="{{ url_for('index') }}">Balon Analytics</a></h1>
                 <nav>
                     <a href="{{ url_for('index') }}">Estadistica Femenil</a>
                     <a href="{{ url_for('sheplays_analytics') }}">Sheplays Analytics</a>
@@ -178,125 +43,108 @@
                 Morbi accumsan ipsum velit.</p>
             <div class="project-grid">
                 <div class="project-card">
-                    <h3>Project 1: Sales Analysis</h3>
-                    <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
-                    <h2>Top 10 Scorers in History</h2>
-        <div id="topScorersChart"></div>
-        <script>
-            // Fetch data for the bar chart
-            fetch('/top-scorers')
-                .then(response => response.json())
-                .then(data => {
-                    const width = 800, height = 400;
-                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-
-                    const xScale = d3.scaleBand()
-                        .domain(data.map(d => d.player_name))
-                        .range([margin.left, width - margin.right])
-                        .padding(0.1);
-
-                    const yScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.total_goals)])
-                        .nice()
-                        .range([height - margin.bottom, margin.top]);
-
-                    const svg = d3.select("#topScorersChart")
-                        .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
-
-                    svg.append("g")
-                        .attr("transform", `translate(0,${height - margin.bottom})`)
-                        .call(d3.axisBottom(xScale))
-                        .selectAll("text")
-                        .attr("transform", "rotate(-45)")
-                        .style("text-anchor", "end");
-
-                    svg.append("g")
-                        .attr("transform", `translate(${margin.left},0)`)
-                        .call(d3.axisLeft(yScale));
-
-                    svg.selectAll(".bar")
-                        .data(data)
-                        .enter()
-                        .append("rect")
-                        .attr("class", "bar")
-                        .attr("x", d => xScale(d.player_name))
-                        .attr("y", d => yScale(d.total_goals))
-                        .attr("height", d => height - margin.bottom - yScale(d.total_goals))
-                        .attr("width", xScale.bandwidth());
-                });
-        </script>
-                </div>
+                    <h3>Project 1: Comparación de Goleadoras por Temporada</h3>
+                    <p>Este gráfico resalta a las jugadoras con más goles en cada temporada y torneo, permitiendo comparar su desempeño goleador.</p>
+                    <div id="topScorersChart"></div>
+                    <script>
+                        fetch('/top-scorers')
+                            .then(response => response.json())
+                            .then(data => {
+                                const width = 580, height = 200;
+                                const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+                    
+                                const xScale = d3.scaleBand()
+                                    .domain(data.map(d => d.player_name))
+                                    .range([margin.left, width - margin.right])
+                                    .padding(0.1);
+                    
+                                const yScale = d3.scaleLinear()
+                                    .domain([0, d3.max(data, d => d.total_goals)])
+                                    .nice()
+                                    .range([height - margin.bottom, margin.top]);
+                    
+                                const svg = d3.select("#topScorersChart")
+                                    .append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height);
+                    
+                                svg.append("g")
+                                    .attr("transform", `translate(0,${height - margin.bottom})`)
+                                    .call(d3.axisBottom(xScale))
+                                    .selectAll("text")
+                                    .attr("transform", "rotate(-45)")
+                                    .style("text-anchor", "end");
+                    
+                                svg.append("g")
+                                    .attr("transform", `translate(${margin.left},0)`)
+                                    .call(d3.axisLeft(yScale));
+                    
+                                svg.selectAll(".bar")
+                                    .data(data)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("class", "bar")
+                                    .attr("x", d => xScale(d.player_name))
+                                    .attr("y", d => yScale(d.total_goals))
+                                    .attr("height", d => height - margin.bottom - yScale(d.total_goals))
+                                    .attr("width", xScale.bandwidth());
+                            });
+                    </script>
+                </div>                    
                 <div class="project-card">
-                    <h3>Project 2: Customer Segmentation</h3>
-                    <p>Clustering customers using K-means for targeted marketing strategies.</p>
-                    <h2>Goals vs Matches Played (Scatter Plot)</h2>
-        <div id="scatterPlotChart"></div>
-        <script>
-            // Fetch data for the scatter plot
-            fetch('/scatter-data') // Replace with the corresponding Flask route
-                .then(response => response.json())
-                .then(data => {
-                    const width = 800, height = 400;
-                    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-
-                    const xScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.matches_played)])
-                        .range([margin.left, width - margin.right]);
-
-                    const yScale = d3.scaleLinear()
-                        .domain([0, d3.max(data, d => d.goals)])
-                        .range([height - margin.bottom, margin.top]);
-
-                    const svg = d3.select("#scatterPlotChart")
-                        .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
-
-                    svg.append("g")
-                        .attr("transform", `translate(0,${height - margin.bottom})`)
-                        .call(d3.axisBottom(xScale))
-                        .append("text")
-                        .attr("x", width / 2)
-                        .attr("y", 40)
-                        .attr("class", "axis-label")
-                        .text("Matches Played");
-
-                    svg.append("g")
-                        .attr("transform", `translate(${margin.left},0)`)
-                        .call(d3.axisLeft(yScale))
-                        .append("text")
-                        .attr("x", -(height / 2))
-                        .attr("y", -40)
-                        .attr("transform", "rotate(-90)")
-                        .attr("class", "axis-label")
-                        .text("Goals");
-
-                    svg.selectAll(".scatter-circle")
-                        .data(data)
-                        .enter()
-                        .append("circle")
-                        .attr("class", "scatter-circle")
-                        .attr("cx", d => xScale(d.matches_played))
-                        .attr("cy", d => yScale(d.goals))
-                        .attr("r", 5);
-                })
-                .catch(error => console.error("Error fetching scatter plot data:", error));
-        </script>
+                    <h3>Project 2: Eficiencia de Goleo</h3>
+                    <p>Relaciona los minutos jugados con los goles anotados por cada jugadora, mostrando qué tan eficiente es una delantera en términos de producción ofensiva.</p>
+                    <div id="efficiencyChart"></div>
+                    <script>
+                        fetch('/api/efficiency')
+                            .then(response => response.json())
+                            .then(data => {
+                                const width = 580, height = 200;
+                                const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+                    
+                                const xScale = d3.scaleBand()
+                                    .domain(data.map(d => d.player_name))
+                                    .range([margin.left, width - margin.right])
+                                    .padding(0.1);
+                    
+                                const yScale = d3.scaleLinear()
+                                    .domain([0, d3.max(data, d => d.goals_per_minute)])
+                                    .nice()
+                                    .range([height - margin.bottom, margin.top]);
+                    
+                                const svg = d3.select("#efficiencyChart")
+                                    .append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height);
+                    
+                                svg.append("g")
+                                    .attr("transform", `translate(0,${height - margin.bottom})`)
+                                    .call(d3.axisBottom(xScale))
+                                    .selectAll("text")
+                                    .attr("transform", "rotate(-45)")
+                                    .style("text-anchor", "end");
+                    
+                                svg.append("g")
+                                    .attr("transform", `translate(${margin.left},0)`)
+                                    .call(d3.axisLeft(yScale));
+                    
+                                svg.selectAll(".bar")
+                                    .data(data)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("class", "bar")
+                                    .attr("x", d => xScale(d.player_name))
+                                    .attr("y", d => yScale(d.goals_per_minute))
+                                    .attr("height", d => height - margin.bottom - yScale(d.goals_per_minute))
+                                    .attr("width", xScale.bandwidth());
+                            });
+                    </script>                    
                 </div>
             </div>
             <a class="ancla" href="#section1">Regresar al menú</a>
         </section>
 
-</main>
 
-    <footer>
-        <p>&copy; <a href="https://marioruizgonzalez.github.io/marioruizportfolio/">Mario Ruiz</a> </p>
-    </footer>
-</body>
-</html>
-<!--
         <section id="opcion1">
             <h2>Data Science Projects</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula consectetur 
@@ -311,80 +159,104 @@
           
                 <div class="project-grid">
                     <div class="project-card">
-                        <h3>Project 1: Sales Analysis</h3>
-                        <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
-                        <h2>Bar Chart Example</h2>
-                        <div id="pieChart"></div>
-                        <script>
-                            const pieData = [{label: "Product A", value: 20}, {label: "Product B", value: 30}, {label: "Product C", value: 50}];
-                            const radius = Math.min(width, height) / 2;
-                            const pie = d3.pie().value(d => d.value);
-                            const arc = d3.arc().innerRadius(0).outerRadius(radius);
-                    
-                            const svgPie = d3.select("#pieChart")
-                                .append("svg")
-                                .attr("width", width)
-                                .attr("height", height)
-                                .append("g")
-                                .attr("transform", `translate(${width / 2}, ${height / 2})`);
-                    
-                            svgPie.selectAll("path")
-                                .data(pie(pieData))
-                                .join("path")
-                                .attr("fill", (d, i) => d3.schemeCategory10[i])
-                                .attr("d", arc);
-                    
-                            svgPie.selectAll("text")
-                                .data(pie(pieData))
-                                .join("text")
-                                .attr("transform", d => `translate(${arc.centroid(d)})`)
-                                .attr("text-anchor", "middle")
-                                .text(d => d.data.label);
-    
-                        </script>
+                        <h3>Project 1: Menos Participación de Menores por Club</h3>
+                        <p>Muestra la cantidad de minutos acumulados por jugadoras menores de edad alineadas en cada club.</p>
+                        <div id="youthParticipationChart"></div>
+<script>
+    fetch('/api/youth-participation')
+        .then(response => response.json())
+        .then(data => {
+            const width = 580, height = 200;
+            const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.club))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.total_minutes_youth)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
+
+            const svg = d3.select("#youthParticipationChart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(yScale));
+
+            svg.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.club))
+                .attr("y", d => yScale(d.total_minutes_youth))
+                .attr("height", d => height - margin.bottom - yScale(d.total_minutes_youth))
+                .attr("width", xScale.bandwidth());
+        });
+</script>
+
                     </div>
                     <div class="project-card">
-                        <h3>Project 2: Customer Segmentation</h3>
-                        <p>Clustering customers using K-means for targeted marketing strategies.</p>
-                        <h2>Line Graph Example</h2>
-                        <div id="areaGraph"></div>
-                        <script>
-                            const areaData = [{x: 0, y: 20}, {x: 1, y: 40}, {x: 2, y: 25}, {x: 3, y: 60}, {x: 4, y: 40}];
+                        <h3>Project 2: Clubes con Más Tarjetas por Minuto Jugado                        </h3>
+                        <p>Representa qué clubes reciben más tarjetas (amarillas y rojas) en relación con los minutos jugados, destacando los equipos más indisciplinados o agresivos.</p>
+                        <div id="cardsPerMinuteChart"></div>
+<script>
+    fetch('/api/cards-per-minute')
+        .then(response => response.json())
+        .then(data => {
+            const width = 580, height = 200;
+            const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-        const xAreaScale = d3.scaleLinear()
-            .domain(d3.extent(areaData, d => d.x))
-            .range([margin.left, width - margin.right]);
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.club))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
 
-        const yAreaScale = d3.scaleLinear()
-            .domain([0, d3.max(areaData, d => d.y)])
-            .range([height - margin.bottom, margin.top]);
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.cards_per_minute)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
 
-        const area = d3.area()
-            .x(d => xAreaScale(d.x))
-            .y0(height - margin.bottom)
-            .y1(d => yAreaScale(d.y));
+            const svg = d3.select("#cardsPerMinuteChart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
 
-        const svgArea = d3.select("#areaGraph")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
 
-        svgArea.append("path")
-            .datum(areaData)
-            .attr("fill", "lightblue")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 1.5)
-            .attr("d", area);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(yScale));
 
-        svgArea.append("g")
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(xAreaScale));
+            svg.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.club))
+                .attr("y", d => yScale(d.cards_per_minute))
+                .attr("height", d => height - margin.bottom - yScale(d.cards_per_minute))
+                .attr("width", xScale.bandwidth());
+        });
+</script>
 
-        svgArea.append("g")
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yAreaScale));
-    
-                        </script>
                     </div>
                 </div>   
                 <a class="ancla" href="#section1">Regresar al menú</a>
@@ -407,103 +279,104 @@
           
                 <div class="project-grid">
                     <div class="project-card">
-                        <h3>Project 1: Sales Analysis</h3>
-                        <p>A deep dive into sales data to uncover trends and patterns using Python and Pandas.</p>
-                        <h2>Bar Chart Example</h2>
-                        <div id="scatterPlot"></div>
-                        <script>
-                            const scatterData = [
-            {x: 10, y: 80, z: 120}, {x: 20, y: 90, z: 60}, {x: 30, y: 50, z: 200}, 
-            {x: 40, y: 60, z: 80}, {x: 50, y: 30, z: 100}
-        ];
+                        <h3>Project 1: Los Clubes Menos Ganadores en la Historia</h3>
+                        <p>Presenta un ranking de los clubes con menos victorias acumuladas históricamente, resaltando aquellos con menor éxito.</p>
+                        <div id="leastWinningClubsChart"></div>
+<script>
+    fetch('/api/least-winning')
+        .then(response => response.json())
+        .then(data => {
+            const width = 580, height = 200;
+            const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-        const xScatter = d3.scaleLinear()
-            .domain([0, d3.max(scatterData, d => d.x)])
-            .range([margin.left, width - margin.right]);
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.club))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
 
-        const yScatter = d3.scaleLinear()
-            .domain([0, d3.max(scatterData, d => d.y)])
-            .range([height - margin.bottom, margin.top]);
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.total_wins)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
 
-        const svgScatter = d3.select("#scatterPlot")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            const svg = d3.select("#leastWinningClubsChart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
 
-        svgScatter.selectAll("circle")
-            .data(scatterData)
-            .join("circle")
-            .attr("cx", d => xScatter(d.x))
-            .attr("cy", d => yScatter(d.y))
-            .attr("r", 5)
-            .attr("fill", "tomato");
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
 
-        svgScatter.append("g")
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(xScatter));
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(yScale));
 
-        svgScatter.append("g")
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yScatter));
-    
-                        </script>
+            svg.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.club))
+                .attr("y", d => yScale(d.total_wins))
+                .attr("height", d => height - margin.bottom - yScale(d.total_wins))
+                .attr("width", xScale.bandwidth());
+        });
+</script>
+
                     </div>
                     <div class="project-card">
-                        <h3>Project 2: Customer Segmentation</h3>
-                        <p>Clustering customers using K-means for targeted marketing strategies.</p>
-                        <h2>Line Graph Example</h2>
-                        <div id="stackedBarChart"></div>
-                        <script>
-                            const stackedData = [
-            {region: "North", productA: 120, productB: 100, productC: 140},
-            {region: "South", productA: 150, productB: 130, productC: 120},
-            {region: "East", productA: 160, productB: 160, productC: 100},
-            {region: "West", productA: 140, productB: 170, productC: 150}
-        ];
+                        <h3>Project 2: Clubes con Mayor Diferencia de Goles Negativa </h3>
+                        <p>Identifica a los equipos con la mayor diferencia de goles negativa en la historia, es decir, aquellos que han recibido significativamente más goles de los que han anotado.</p>
+                        <div id="negativeGoalDifferenceChart"></div>
+<script>
+    fetch('/api/negative-goal-difference')
+        .then(response => response.json())
+        .then(data => {
+            const width = 580, height = 200;
+            const margin = { top: 20, right: 30, bottom: 50, left: 60 };
 
-        const keys = ["productA", "productB", "productC"];
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.club))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
 
-        const xStacked = d3.scaleBand()
-            .domain(stackedData.map(d => d.region))
-            .rangeRound([margin.left, width - margin.right])
-            .paddingInner(0.1);
+            const yScale = d3.scaleLinear()
+                .domain([d3.min(data, d => d.goal_difference), 0])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
 
-        const yStacked = d3.scaleLinear()
-            .domain([0, d3.max(stackedData, d => d.productA + d.productB + d.productC)])
-            .rangeRound([height - margin.bottom, margin.top]);
+            const svg = d3.select("#negativeGoalDifferenceChart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
 
-        const color = d3.scaleOrdinal()
-            .domain(keys)
-            .range(['#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
 
-        const svgStacked = d3.select("#stackedBarChart")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(yScale));
 
-        const layer = svgStacked.selectAll(".layer")
-            .data(d3.stack().keys(keys)(stackedData))
-            .join("g")
-            .attr("class", "layer")
-            .style("fill", d => color(d.key));
+            svg.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => xScale(d.club))
+                .attr("y", d => yScale(d.goal_difference))
+                .attr("height", d => height - margin.bottom - yScale(d.goal_difference))
+                .attr("width", xScale.bandwidth());
+        });
+</script>
 
-        layer.selectAll("rect")
-            .data(d => d)
-            .join("rect")
-            .attr("x", d => xStacked(d.data.region))
-            .attr("y", d => yStacked(d[1]))
-            .attr("height", d => yStacked(d[0]) - yStacked(d[1]))
-            .attr("width", xStacked.bandwidth());
-
-        svgStacked.append("g")
-            .attr("transform", `translate(0,${height - margin.bottom})`)
-            .call(d3.axisBottom(xStacked));
-
-        svgStacked.append("g")
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(yStacked));
-    
-                        </script>
                     </div>
                 </div>  
                 <a class="ancla" href="#section1">Regresar al menú</a> 
@@ -516,4 +389,3 @@
     </footer>
 </body>
 </html>
--->
